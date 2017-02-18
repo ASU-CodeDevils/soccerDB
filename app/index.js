@@ -53,7 +53,7 @@ var TestingSQL = React.createClass({
         }.bind(this)
     var sendresult =this.state.input;
     console.log("value" + sendresult);
-    mypostrequest.open("POST", "http://http://sportswiz.herokuapp.com/query", true);
+    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     mypostrequest.send("query="+sendresult);
    
