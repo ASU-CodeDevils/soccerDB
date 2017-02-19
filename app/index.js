@@ -2,7 +2,8 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-
+var Griddle = require('griddle-react');
+var toDisplay;
 function ajaxRequest(){//This function at the top is for avoiding browsers which can't handle ajax. 
  var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
  if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
@@ -41,6 +42,7 @@ var TestingSQL = React.createClass({
     if (mypostrequest.status==200 ||        window.location.href.indexOf("http")==-1){
        //In this ajax request we're making a call to the passed url with our query.
         results=mypostrequest.responseText;
+        toDisplay = JSON.parse(results);
          console.log("Request complete.");
       this.setState({
             result: results//We're updating the result state to match the returned results. 
@@ -55,7 +57,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
    
@@ -67,6 +69,7 @@ var TestingSQL = React.createClass({
             Submit Query: <input type="text" value={this.state.input} onChange={this.updateInput}/>
             <button onClick={this.showResult}>Query</button><br></br>
             <p>{this.state.result}</p>
+            <Griddle results={toDisplay}/>
             </div>
         )
     }
