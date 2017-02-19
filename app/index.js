@@ -2,7 +2,8 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-
+var Griddle = require('griddle-react');
+var toDisplay;
 function ajaxRequest(){//This function at the top is for avoiding browsers which can't handle ajax. 
  var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
  if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
@@ -41,6 +42,7 @@ var TestingSQL = React.createClass({
     if (mypostrequest.status==200 ||        window.location.href.indexOf("http")==-1){
        //In this ajax request we're making a call to the passed url with our query.
         results=mypostrequest.responseText;
+        toDisplay = JSON.parse(results);
          console.log("Request complete.");
       this.setState({
             result: results//We're updating the result state to match the returned results. 
@@ -67,6 +69,7 @@ var TestingSQL = React.createClass({
             Submit Query: <input type="text" value={this.state.input} onChange={this.updateInput}/>
             <button onClick={this.showResult}>Query</button><br></br>
             <p>{this.state.result}</p>
+            <Griddle results={toDisplay}/>
             </div>
         )
     }
