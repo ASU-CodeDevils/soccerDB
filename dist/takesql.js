@@ -4,7 +4,7 @@ var mysql = require("mysql");//Js plugin for mysql
 var takeSQL = function(){};//Establishing function.
 takeSQL.prototype.connectDB = function(query,callback){//We will take the query here and then make the callback when we get a response. 
 var querypassed = query;//Saving query value.
-console.log(query);//Logging query
+ 
    
 var con = mysql.createConnection({
 host: "sql3.freemysqlhosting.net",

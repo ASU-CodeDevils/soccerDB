@@ -19,7 +19,7 @@ app.post('/query', function(req,res){
     console.log(req.body.query);//Printing query
    
    function tosend(q){//Function for callback when the database returns the information from the query. 
-        res.send(q);//Sending information back. 
+        res.status(200).send(q);//Sending information back. 
         console.log("sent" + q);//Logging information sent.
     }
     if(req.body.query!=' '){
