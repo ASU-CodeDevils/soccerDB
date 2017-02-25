@@ -17,9 +17,8 @@ module.exports = {
     }, 
     module: {
         loaders: [
-            {test:/\.js$/,exclude: [/node_modules/, /server/],loader: "babel-loader"},
+            {test:/\.js$/,exclude: [/node_modules/, /server/],loader: "babel-loader"}
         ]
     }, 
-    plugins:[HtmlWEbpackPluginConfig],
-    watch: true
+    plugins:[HtmlWEbpackPluginConfig]
 }

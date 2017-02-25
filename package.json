@@ -8,19 +8,22 @@
     "babel-loader": "^6.3.2",
     "babel-preset-react": "^6.23.0",
     "body-parser": "^1.16.1",
+    "bootstrap": "^3.3.7",
     "express": "^4.14.1",
     "griddle-react": "^0.7.1",
     "html-webpack-plugin": "^2.28.0",
     "mysql": "^2.13.0",
     "react": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
-    "react-widgets": "^3.4.6",
+    "react-syntax-highlighter": "^5.0.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   },
   "devDependencies": {},
   "scripts": {
     "production": "webpack -p",
+    "watch": "webpack --watch",
     "start": "node server/server.js"
   },
   "author": "",
