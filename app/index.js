@@ -7,8 +7,8 @@ registerLanguage('sql', sql);
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Griddle = require('griddle-react');
-var DropdownList = require('react-widgets').DropdownList;
-var colors = ['orange', 'red', 'blue', 'purple'];
+ 
+
 
 var toDisplay;
 var check = false;
@@ -46,8 +46,45 @@ var TestingSQL = React.createClass({
             teams: null, 
             positions: null,
             leagues: null,
-            ajaxtopass: null
+            ajaxtopass: null,
+            dropdown: ['Select Option','Teams', 'Leagues', 'Teams Undefeated', 'Teams Positive win/loss Ratio', 'Tournament Winners', 'Tournament Games'],
+            dropselect: ''
         }
+    },
+    dropDownUpdate: function(event){
+      this.setState({dropselect: event.target.value}, function showdrop(){this.showingdrop()});  
+    },
+    showingdrop: function(){
+      if(this.state.dropselect=='Teams')
+          {
+              var teamselect = 'SELECT teamName AS Teams, leagueName AS League FROM Teams, Leagues WHERE (Teams.leagueID Like Leagues.leagueID)';
+              this.setState({query: teamselect}, function toshow(){this.showResult()});
+          }
+        else if(this.state.dropselect=='Leagues')
+          {
+              var teamselect = 'SELECT leagueName AS League FROM Leagues';
+              this.setState({query: teamselect}, function toshow(){this.showResult()});
+          }
+        else if(this.state.dropselect=='Teams Undefeated')
+          {
+              var teamselect = 'SELECT teamName AS Teams FROM Teams WHERE (games_lost Like 0)';
+              this.setState({query: teamselect}, function toshow(){this.showResult()});
+          }
+        else if(this.state.dropselect=='Teams Positive win/loss Ratio')
+          {
+              var teamselect = 'SELECT teamName AS Teams FROM Teams WHERE (games_lost < games_won)';
+              this.setState({query: teamselect}, function toshow(){this.showResult()});
+          }
+        else if(this.state.dropselect=='Tournament Winners')
+          {
+              var teamselect = 'SELECT tournamentName AS Tournament, teamName AS Winner FROM Teams, Tournaments WHERE winnerID LIKE teamID';
+              this.setState({query: teamselect}, function toshow(){this.showResult()});
+          }
+        else if(this.state.dropselect=='Tournament Games')
+          {
+              var teamselect = 'SELECT tournamentName AS Tournament, scoreHome AS \'Score Home\',scoreAway AS \'Score Away\', Team1.teamName AS Home, Team2.teamName AS Away, Team3.teamName AS Winner FROM Teams AS Team1, Teams AS Team2, Teams As Team3,Games, Tournaments WHERE (Tournaments.tournamentID LIKE Games.tournamentID AND homeID LIKE Team1.teamID AND awayID LIKE Team2.teamID AND Games.winnerID LIKE Team3.teamID)';
+              this.setState({query: teamselect}, function toshow(){this.showResult()});
+          }
     },
     showAddScreen: function(){
       this.setState({showAdmin: true});
@@ -248,6 +285,9 @@ var TestingSQL = React.createClass({
    
     },
     render: function(){
+         var listItems = this.state.dropdown.map(function(items){
+          return <option value ={items}>{items}</option>
+      });
         return(//Every component in react needs a render function. We can write any html we want in here. Webpack will convert the jsx to js and put it in the  dist folder. Note the curly braces around state values and methods.
         /*<div> 
             <h3>Query Database</h3><br></br>
@@ -295,7 +335,12 @@ var TestingSQL = React.createClass({
                 </div>
                 <button onClick={this.keywordSearch} className="btn btn-primary col-md-1">Search</button>
              </div>
-             
+             <br></br>
+             <select value ={this.state.dropselect} onChange={this.dropDownUpdate}>
+             {listItems}
+             </select>
+             <br></br>
+             <br></br>
              <button onClick={this.showAddScreen} className="btn btn-primary col-md-1">Admin</button>
             
              {this.state.showAdmin ? <button onClick={this.closeAddScreen} className="btn btn-primary col-md-1">Close</button> : null }
@@ -320,6 +365,7 @@ var TestingSQL = React.createClass({
             <div className="row">
                 <img src={"http://codedistrict.io/wp-content/uploads/2015/12/mernstack_icon.gif"} alt="mern" className="img-responsive center-block" />
             </div>
+            
         </div>
         )
     }
