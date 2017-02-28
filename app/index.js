@@ -72,7 +72,7 @@ var TestingSQL = React.createClass({
           }
         else if(this.state.dropselect=='Teams Positive win/loss Ratio')
           {
-              var teamselect = 'SELECT teamName AS Teams FROM Teams WHERE (games_lost < games_won)';
+              var teamselect = 'SELECT teamName AS Teams, games_won AS Wins, games_lost AS Lost FROM Teams WHERE (games_lost < games_won)';
               this.setState({query: teamselect}, function toshow(){this.showResult()});
           }
         else if(this.state.dropselect=='Tournament Winners')
