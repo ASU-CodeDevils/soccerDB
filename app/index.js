@@ -1,5 +1,9 @@
 //This is where the react work happens.
-
+import {Button} from 'react-bootstrap';
+import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/dist/light";
+import sql from 'highlight.js/lib/languages/sql';
+import monokaiSublime from 'react-syntax-highlighter/dist/styles/monokai-sublime';
+registerLanguage('sql', sql);
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Griddle = require('griddle-react');
@@ -97,7 +101,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =toquery;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -159,7 +163,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.query;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -198,7 +202,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT teamName FROM Teams");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -237,15 +241,15 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT DISTINCT position FROM Players");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
    
     },
     render: function(){
-        return(//Every component in react needs a render function. We can write any html we want in here. Webpack will convert the jsx to js and put it in the  dist folder. Note the curly braces around state values and methods. 
-        <div> 
+        return(//Every component in react needs a render function. We can write any html we want in here. Webpack will convert the jsx to js and put it in the  dist folder. Note the curly braces around state values and methods.
+        /*<div> 
             <h3>Query Database</h3><br></br>
             Submit Query: <input type="text" value={this.state.input} onChange={this.updateInput}/>
             <button onClick={this.showResult}>Query</button><br></br>
@@ -265,7 +269,58 @@ var TestingSQL = React.createClass({
             
             
             
+            </div>*/
+            
+            
+            
+            
+             <div className="container">
+            <div className="jumbotron">
+                <h2>Query Database</h2>
+                <p><small>Test your sql queries against our database</small></p>
             </div>
+            <br />
+            <div className="form-group row">
+                <label for="lblQuery" className="col-md-2 col-form-label">Submit Query:</label>
+                <div className="col-md-4">
+                    {/*<input className="form-control" type="text" value={this.state.input} id="lblQuery" onChange={this.updateInput} />*/}
+                    <textarea className="form-control" rows="4" cols="47" value={this.state.input} id="lblQuery" onChange={this.updateInput}></textarea>
+                </div>
+                <button onClick={this.showResult} className="btn btn-primary col-md-1">Query</button>
+            </div>
+            <div className="row">
+                <label for="searchBox" className="col-md-3">Player/Position/Team Search:</label>
+                <div className="col-md-3">
+                    <input className="form-control" type="text" value={this.state.keyword} id="searchBox" onChange={this.keywordUpdate} />
+                </div>
+                <button onClick={this.keywordSearch} className="btn btn-primary col-md-1">Search</button>
+             </div>
+             
+             <button onClick={this.showAddScreen} className="btn btn-primary col-md-1">Admin</button>
+            
+             {this.state.showAdmin ? <button onClick={this.closeAddScreen} className="btn btn-primary col-md-1">Close</button> : null }
+            <br></br>
+             {this.state.showAdmin ? <Admin teamlist={this.state.teams} positionlist={this.state.positions} ajax={this.genericQuery} result={this.state.ajaxtopass}/> : null}
+            
+             <br></br>
+            {this.state.showAdmin ? <Teamadd leaguelist={this.state.leagues}  ajax={this.genericQuery} result={this.state.ajaxtopass} added={this.buildTeams}/> : null}
+            {/*<p>Player/Position/Team Search: <input type= "text" value = {this.state.keyword} onChange={this.keywordUpdate}/><button onClick={this.keywordSearch}>Search</button></p>*/}
+            <br></br>
+          
+            <Griddle results={toDisplay} showSettings={true}/>
+            <br></br>
+            <div className="row">
+                <div className="col-md-4"></div>
+                <SyntaxHighlighter style={monokaiSublime} wrapLines={true} showLineNumbers={true} className="col-md-4">{this.state.query}</SyntaxHighlighter>
+                <div className="col-md-4"></div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div className="row">
+                <img src={"http://codedistrict.io/wp-content/uploads/2015/12/mernstack_icon.gif"} alt="mern" className="img-responsive center-block" />
+            </div>
+        </div>
         )
     }
 });
@@ -403,19 +458,19 @@ var Admin = React.createClass({
         return(
             <div>
             <h3> Players:</h3>
-            <form class="pure-form pure-form-stacked">
+            <form  >
             <label>
             <div id="clear">
             Name:
-            <input type="text" value={this.state.name} onChange={this.updateName}/>
-            &nbsp;
+            <input className="form-control" type="text" value={this.state.name} onChange={this.updateName}/>
+            
             Number:
-            <input type="number" value={this.state.number} onChange={this.updateNumber}/>
+            <input className="form-control" type="number" value={this.state.number} onChange={this.updateNumber}/>
             &nbsp;
             </div>
             <br></br>
             Games Played: 
-            <input type="number" value={this.state.gamesplayed} onChange={this.updateGames}/>
+            <input className="form-control" type="number" value={this.state.gamesplayed} onChange={this.updateGames}/>
             <br>
             </br>
             Team:
@@ -425,7 +480,7 @@ var Admin = React.createClass({
             <Form val={this.props.positionlist[0]} items={this.props.positionlist} updateTeam={this.updatePosition}/>
             
             <br></br>
-            <input type = "submit" value="Add Player" onClick={this.infoConvert}/>
+            <button onClick={this.infoConvert} className="btn btn-primary col-md-5" >Add Player</button>
             <br></br>
             {this.state.error}
             </label>
@@ -529,22 +584,22 @@ var Teamadd = React.createClass({
             <label>
             <div id="clear2">
             Team:
-            <input type="text" value={this.state.name} onChange={this.updateName}/>
+            <input className="form-control" type="text" value={this.state.name} onChange={this.updateName}/>
             &nbsp;
              </div>
             <br></br>
             Games Won:
-            <input type="number" value={this.state.gameswon} onChange={this.updateGamesWon}/>
+            <input className="form-control" type="number" value={this.state.gameswon} onChange={this.updateGamesWon}/>
             &nbsp;
             Games Lost: 
-            <input type="number" value={this.state.gameslost} onChange={this.updateGamesLost}/>
+            <input className="form-control" type="number" value={this.state.gameslost} onChange={this.updateGamesLost}/>
             <br>
             </br><br></br>
             League:
             <Form val={this.props.leaguelist[0]} items={this.props.leaguelist} updateTeam={this.updateLeagueName}/>
             <br></br>
            
-            <input type = "submit" value="Add Team" onClick={this.infoConvert}/>
+            <button onClick={this.infoConvert} className="btn btn-primary col-md-5">Add Team</button>
             <br></br>
             {this.state.error}
             </label>
