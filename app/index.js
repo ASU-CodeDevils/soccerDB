@@ -138,7 +138,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =toquery;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -200,7 +200,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.query;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -239,7 +239,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT teamName FROM Teams");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -278,7 +278,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT DISTINCT position FROM Players");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -313,7 +313,7 @@ var TestingSQL = React.createClass({
             
             
             
-            
+            /*
              <div className="container">
             <div className="jumbotron">
                 <h2>Query Database</h2>
@@ -323,7 +323,7 @@ var TestingSQL = React.createClass({
             <div className="form-group row">
                 <label for="lblQuery" className="col-md-2 col-form-label">Submit Query:</label>
                 <div className="col-md-4">
-                    {/*<input className="form-control" type="text" value={this.state.input} id="lblQuery" onChange={this.updateInput} />*/}
+                  
                     <textarea className="form-control" rows="4" cols="47" value={this.state.input} id="lblQuery" onChange={this.updateInput}></textarea>
                 </div>
                 <button onClick={this.showResult} className="btn btn-primary col-md-1">Query</button>
@@ -349,7 +349,7 @@ var TestingSQL = React.createClass({
             
              <br></br>
             {this.state.showAdmin ? <Teamadd leaguelist={this.state.leagues}  ajax={this.genericQuery} result={this.state.ajaxtopass} added={this.buildTeams}/> : null}
-            {/*<p>Player/Position/Team Search: <input type= "text" value = {this.state.keyword} onChange={this.keywordUpdate}/><button onClick={this.keywordSearch}>Search</button></p>*/}
+           
             <br></br>
           
             <Griddle results={toDisplay} showSettings={true}/>
@@ -359,6 +359,79 @@ var TestingSQL = React.createClass({
                 <SyntaxHighlighter style={monokaiSublime} wrapLines={true} showLineNumbers={true} className="col-md-4">{this.state.query}</SyntaxHighlighter>
                 <div className="col-md-4"></div>
             </div>
+            <br />
+            <br />
+            <br />
+            <div className="row">
+                <img src={"http://codedistrict.io/wp-content/uploads/2015/12/mernstack_icon.gif"} alt="mern" className="img-responsive center-block" />
+            </div>
+            
+        </div>*/
+               <div className="container">
+            <div className="jumbotron">
+                <h2>Query Database</h2>
+                <p><small>Test your sql queries against our database</small></p>
+            </div>
+            <br />
+            <div className="row well col-md-8 col-md-offset-2">
+                <big className="col-md-3"><strong>Available Tables: </strong></big>
+                <div className="btn-toolbar text-center col-md-9">
+                    <button type="button" className="btn btn-default offset-md-3">Players</button>
+                    <button type="button" className="btn btn-success">Teams</button>
+                    <button type="button" className="btn btn-info">Leagues</button>
+                    <button type="button" className="btn btn-warning">Games</button>
+                    <button type="button" className="btn btn-danger">Tournaments</button>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div className="col-md-8"><div className="form-group row">
+                <label for="lblQuery" className="col-md-2 col-form-label">Submit Query:</label>
+                <div className="col-md-8">
+                    {/*<input className="form-control" type="text" value={this.state.input} id="lblQuery" onChange={this.updateInput} />*/}
+                    <textarea className="form-control" rows="4" cols="47" value={this.state.input} id="lblQuery" onChange={this.updateInput}></textarea>
+                </div>
+                <button onClick={this.showResult} className="btn btn-primary col-md-1">Query</button>
+            </div>
+            <div className="row">
+                <label for="searchBox" className="col-md-4">Player/Position/Team Search:</label>
+                <div className="col-md-6">
+                    <input className="form-control" type="text" value={this.state.keyword} id="searchBox" onChange={this.keywordUpdate} />
+                </div>
+                <button onClick={this.keywordSearch} className="btn btn-primary col-md-1">Search</button>
+             </div>
+             <br></br>
+             <br></br>
+             <div className="row btn-toolbar"><button onClick={this.showAddScreen} className="btn btn-primary">Add to Table</button>
+            
+             {this.state.showAdmin ? <button onClick={this.closeAddScreen} className="btn btn-primary">Close</button> : null }</div>
+            <br></br>
+             <div className="row"><div className="col-md-6">{this.state.showAdmin ? <Admin teamlist={this.state.teams} positionlist={this.state.positions} ajax={this.genericQuery} result={this.state.ajaxtopass}/> : null}
+            
+             <br></br></div>
+            <div className="col-md-6">{this.state.showAdmin ? <Teamadd leaguelist={this.state.leagues}  ajax={this.genericQuery} result={this.state.ajaxtopass} added={this.buildTeams}/> : null}
+            {/*<p>Player/Position/Team Search: <input type= "text" value = {this.state.keyword} onChange={this.keywordUpdate}/><button onClick={this.keywordSearch}>Search</button></p>*/}
+            <br></br></div></div>
+            </div>
+            
+            <div className="col-md-4">
+                <div className="row">
+                    <label className="col-md-5 col-form-label">Preset Queries:</label>
+                    <select value={this.state.dropselect} onChange={this.dropDownUpdate}>
+                        {listItems}
+                    </select>
+                </div>
+                <br />
+                <SyntaxHighlighter style={monokaiSublime} wrapLines={true} showLineNumbers={true}>{this.state.query}</SyntaxHighlighter>
+            </div>
+          
+            <Griddle results={toDisplay} showSettings={true}/>
             <br />
             <br />
             <br />
