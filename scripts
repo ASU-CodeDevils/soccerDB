@@ -1,0 +1,57 @@
+CREATE DATABASE sql3159529;
+USE sql3159529;
+CREATE TABLE Teams(
+    teamID INT               NOT NULL,
+    teamName VARCHAR(110)    NOT NULL, 
+    games_won INT            DEFAULT 0,
+    games_lost INT           DEFAULT 0,
+    leagueID INT             NOT NULL, 
+    PRIMARY KEY(teamID) 
+);
+INSERT INTO Teams (teamID, teamName, games_won, games_list, leagueID)  
+VALUES (1, 'WakeFC', 0, 0, 1);
+CREATE TABLE Leagues(
+    leagueID INT             NOT NULL,
+    leagueName VARCHAR(110)  NOT NULL, 
+    PRIMARY KEY(leagueID)
+    
+);
+INSERT INTO Leagues( leagueID, leagueName) 
+VALUES (1, 'Advanced 10-12');
+CREATE TABLE Players(
+    playerID INT             NOT NULL, 
+    name VARCHAR(110)        NOT NULL, 
+    playernumber INT         NOT NULL, 
+    position VARCHAR(60)     NOT NULL, 
+    teamID INT               NOT NULL, 
+    games_played INT         DEFAULT 0, 
+    PRIMARY KEY(playerID)
+    
+);
+INSERT INTO PLayers( playerID, name, playernumber, position, teamID, games_played)
+VALUES (1,'Ethan Conway', 2, 'Mid-Fielder', 1, 6);
+CREATE TABLE Games(
+    gameID INT               NOT NULL,
+    homeID INT               NOT NULL, 
+    awayID INT               NOT NULL, 
+    winnerID INT             NOT NULL, 
+    gameDate VARCHAR(80)     NOT NULL, 
+    scoreAway INT            DEFAULT 0,
+    scoreHome INT            DEFAULT 0,
+    tournamentID             NULL, 
+    PRIMARY KEY(gameID)
+);
+INSERT INTO Games(gameID, homeID, awayID, winnerID, gameDate, scoreAway, scoreHome, tournamentID)
+VALUES (1, 1, 2, 1, 'November 5, 2016', 1, 2, 1);
+CREATE TABLE Tournaments(
+    tournamentID INT         NOT NULL, 
+    tournamentName VARCHAR(110) NOT NULL, 
+    tournamentDate VARCHAR(80) NOT NULL, 
+    winnerID INT             NOT NULL, 
+    winnerName VARCHAR(110)  NOT NULL, 
+    mvpID INT                NOT NULL, 
+    PRIMARY KEY(tournamentID)
+);
+INSERT INTO Tournaments(tournamentID, tournamentName, tournamentDate, winnerID, winnerName, mvpID)
+VALUES (1, 'Playoffs', 'February 10, 2017', 1, 'WAKEFC Sounders', 1);
+UPDATE Tournaments SET tournamentDate='November 5, 2016' WHERE tournamentID=1;S

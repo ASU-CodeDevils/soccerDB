@@ -138,7 +138,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =toquery;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.heroku.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -200,7 +200,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.query;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.heroku.com/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
+    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -239,7 +239,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.heroku.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT teamName FROM Teams");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -278,7 +278,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.heroku.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT DISTINCT position FROM Players");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
