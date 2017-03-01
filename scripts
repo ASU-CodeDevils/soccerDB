@@ -1,3 +1,5 @@
+Set-Up
+//////////////////////////////////////////////////////////////////////////////////////
 CREATE DATABASE sql3159529;
 USE sql3159529;
 CREATE TABLE Teams(
@@ -54,4 +56,19 @@ CREATE TABLE Tournaments(
 );
 INSERT INTO Tournaments(tournamentID, tournamentName, tournamentDate, winnerID, winnerName, mvpID)
 VALUES (1, 'Playoffs', 'February 10, 2017', 1, 'WAKEFC Sounders', 1);
-UPDATE Tournaments SET tournamentDate='November 5, 2016' WHERE tournamentID=1;S
+UPDATE Tournaments SET tournamentDate='November 5, 2016' WHERE tournamentID=1;
+UPDATE Games SET tournamentID=1 WHERE gameID=2;
+INSERT INTO Games(gameID, homeID, awayID, winnerID, gameDate, scoreAway, scoreHome, tournamentID)
+VALUES (32, 1, 4, 1, 'November 5, 2016', 3, 2, 1);
+UPDATE Games SET gameDate='February 11, 2017' WHERE gameID=31;
+UPDATE Games SET scoreAway=3 WHERE gameID=31;
+///////////////////////////////////////////////////////////////////////////////////////////
+Queries
+SELECT teamName AS Teams, leagueName AS League FROM Teams, Leagues WHERE (Teams.leagueID Like Leagues.leagueID);
+SELECT leagueName AS League FROM Leagues;
+SELECT teamName AS Teams FROM Teams WHERE (games_lost Like 0);
+SELECT teamName AS Teams, games_won AS Wins, games_lost AS Lost FROM Teams WHERE (games_lost < games_won);
+SELECT tournamentName AS Tournament, teamName AS Winner FROM Teams, Tournaments WHERE winnerID LIKE teamID;
+SELECT tournamentName AS Tournament, scoreHome AS 'Score Home',scoreAway AS 'Score Away', Team1.teamName AS Home, Team2.teamName AS Away, Team3.teamName AS Winner FROM Teams AS Team1, Teams AS Team2, Teams As Team3,Games, Tournaments WHERE (Tournaments.tournamentID LIKE Games.tournamentID AND homeID LIKE Team1.teamID AND awayID LIKE Team2.teamID AND Games.winnerID LIKE Team3.teamID);
+SELECT DISTINCT name AS Player, position AS Position,playernumber AS Number, games_played AS Games, teamName AS Team, leagueName AS League FROM Players,Teams, Leagues WHERE ((name LIKE '%Wake%' OR position LIKE '%Wake%' OR teamName LIKE '%Wake%') AND Players.teamID=Teams.teamID AND Teams.leagueID=Leagues.leagueID);
+

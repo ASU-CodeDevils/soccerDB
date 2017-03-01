@@ -138,7 +138,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =toquery;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -200,7 +200,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.query;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type. sportswiz.herokuapp.com
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query="+sendresult);//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -239,7 +239,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT teamName FROM Teams");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -278,7 +278,7 @@ var TestingSQL = React.createClass({
         }.bind(this)//Important to bind this, because if we don't this will refer to the mypostrequest.onreadystatechange and the state won't be updated. 
     var sendresult =this.state.input;//Taking the input from the input state and putting it in variable sendresult.
     console.log("value: " + sendresult);//Loggin query
-    mypostrequest.open("POST", "http://sportswiz.herokuapp.com/query", true);//Giving ajax the url and type.
+    mypostrequest.open("POST", "http://localhost:5000/query", true);//Giving ajax the url and type.
     mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Encoding.
     mypostrequest.send("query=SELECT DISTINCT position FROM Players");//Sending our query back to our server. Which will then connect to the database and then return the result of the query.
         check = false;
@@ -487,9 +487,10 @@ var Admin = React.createClass({
             }
     },
     message: function(){
-        var list = document.getElementById("clear").getElementsByTagName("input");
-        for(var each in list){
-            list[each].value = "";
+        var list = document.getElementById("clear").getElementsByClassName("form-control");
+        console.log(list);
+        for(var x =0;x<list.length;x++){
+            list[x].value = "";
         }
         console.log(list);
         console.log("Insert complete");
@@ -508,7 +509,7 @@ var Admin = React.createClass({
             <label>
             <div id="clear">
             Name:
-            <input className="form-control" type="text" value={this.state.name} onChange={this.updateName}/>
+            <input  type="text" className="form-control"value={this.state.name} onChange={this.updateName}/>
             
             Number:
             <input className="form-control" type="number" value={this.state.number} onChange={this.updateNumber}/>
@@ -527,7 +528,7 @@ var Admin = React.createClass({
             
             <br></br>
             <button onClick={this.infoConvert} className="btn btn-primary col-md-5" >Add Player</button>
-            <br></br>
+            <br></br><br></br>
             {this.state.error}
             </label>
             </form>
@@ -609,8 +610,8 @@ var Teamadd = React.createClass({
     },
     message: function(){
         var list = document.getElementById("clear2").getElementsByTagName("input");
-        for(var each in list){
-            list[each].value = "";
+        for(var x =0;x<list.length;x++){
+            list[x].value = "";
         }
         console.log(list);
         console.log("Insert complete");
@@ -646,7 +647,7 @@ var Teamadd = React.createClass({
             <br></br>
            
             <button onClick={this.infoConvert} className="btn btn-primary col-md-5">Add Team</button>
-            <br></br>
+            <br></br><br></br>
             {this.state.error}
             </label>
             </form>
