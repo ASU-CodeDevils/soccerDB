@@ -1,7 +1,6 @@
 # soccerDB
 
-Soccer Database for SER 322 Final Project. 
-
+This is a project from a class project. This is for reference in designing the EdApp project because this project used react technology. 
 Contains the following tables:
 Players
 Teams
